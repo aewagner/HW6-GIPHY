@@ -29,7 +29,7 @@ function renderButtons() {
 
 //$("button").on("click", function() {
 
-function addGiphys(){
+function addGiphys() {
     // Grabbing and storing the data-animal property value from the button
     var toon = $(this).attr("data-toon");
 
@@ -63,6 +63,10 @@ function addGiphys(){
                 var toonImage = $("<img>");
                 // Setting the src attribute of the image to a property pulled off the result item
                 toonImage.attr("src", results[i].images.fixed_height_still.url);
+                toonImage.attr("data-state", "still");
+                toonImage.attr("data-still", results[i].images.fixed_height_still.url);
+                toonImage.attr("data-animate", results[i].images.fixed_height.url);
+                toonImage.addClass("gif")
 
                 // Appending the paragraph and image tag to the animalDiv
                 toonDiv.append(p);
@@ -70,26 +74,49 @@ function addGiphys(){
 
                 // Prependng the animalDiv to the HTML page in the "#gifs-appear-here" div
                 $("#toons").prepend(toonDiv);
+
+
             }
         });
 };
 
 $("#add-toon").on("click", function(event) {
-        event.preventDefault();
-        // This line grabs the input from the textbox
-        var character = $("#toon-input").val().trim();
+    event.preventDefault();
+    // This line grabs the input from the textbox
+    var character = $("#toon-input").val().trim();
 
-        // Adding movie from the textbox to our array
-        characters.push(character);
+    // Adding movie from the textbox to our array
+    characters.push(character);
 
-        // Calling renderButtons which handles the processing of our movie array
-        renderButtons();
-      });
+    // Calling renderButtons which handles the processing of our movie array
+    renderButtons();
+});
 
-
-
-      // Adding a click event listener to all elements with a class of "movie"
-      $(document).on("click", ".toon", addGiphys);
+//function pause() {
 
 
-      renderButtons();
+    $(".gif").on("click", function() {
+            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+            var state = $(this).attr("data-state");
+            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+            // Then, set the image's data-state to animate
+            // Else set src to the data-still value
+            if (state === "still") {
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            } else {
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            };
+            alert(this);
+        });
+  //  }
+
+
+
+    // Adding a click event listener to all elements with a class of "movie"
+    $(document).on("click", ".toon", addGiphys);
+
+
+    renderButtons();
+    //pause();
