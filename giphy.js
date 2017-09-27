@@ -54,7 +54,7 @@ function addGiphys(){
             for (var i = 0; i < results.length; i++) {
 
                 // Creating and storing a div tag
-                var toonDiv = $("<div>");
+                var toonDiv = $('<div id="giph-container">');
 
                 // Creating a paragraph tag with the result item's rating
                 var p = $("<p>").text("Rating: " + results[i].rating);
@@ -62,7 +62,7 @@ function addGiphys(){
                 // Creating and storing an image tag
                 var toonImage = $("<img>");
                 // Setting the src attribute of the image to a property pulled off the result item
-                toonImage.attr("src", results[i].images.fixed_height.url);
+                toonImage.attr("src", results[i].images.fixed_height_still.url);
 
                 // Appending the paragraph and image tag to the animalDiv
                 toonDiv.append(p);
