@@ -2,23 +2,23 @@ var characters = ["Archer", "Rick Sanchez", "Morty", "BoJack Horseman", "Bob Bel
 
 function renderButtons() {
 
-    // Deleting the movies prior to adding new movies
+    // Deleting the characters prior to adding new characters
     // (this is necessary otherwise you will have repeat buttons)
     $("#toon-buttons").empty();
 
-    // Looping through the array of movies
+    // Looping through the array of characters
     for (var i = 0; i < characters.length; i++) {
 
-        // Then dynamicaly generating buttons for each movie in the array
+        // Then dynamicaly generating buttons for each character in the array
         // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
         var a = $("<button>");
-        // Adding a class of movie to our button
+        // Adding a class of toon to our button
         a.addClass("toon");
-        // Adding a data-attribute
+        // Adding a data-toon
         a.attr("data-toon", characters[i]);
         // Providing the initial button text
         a.text(characters[i]);
-        // Adding the button to the buttons-view div
+        // Adding the button to the toon-buttons div
         $("#toon-buttons").append(a);
     }
 };
@@ -30,10 +30,10 @@ function renderButtons() {
 //$("button").on("click", function() {
 
 function addGiphys() {
-    // Grabbing and storing the data-animal property value from the button
+    // Grabbing and storing the data-toon property value from the button
     var toon = $(this).attr("data-toon");
 
-    // Constructing a queryURL using the animal name
+    // Constructing a queryURL using the toon name
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         toon + "&api_key=dc6zaTOxFJmzC&limit=10";
 
@@ -92,31 +92,29 @@ $("#add-toon").on("click", function(event) {
     renderButtons();
 });
 
-//function pause() {
-
-
-    $(".gif").on("click", function() {
-            // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-            var state = $(this).attr("data-state");
-            // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-            // Then, set the image's data-state to animate
-            // Else set src to the data-still value
-            if (state === "still") {
-                $(this).attr("src", $(this).attr("data-animate"));
-                $(this).attr("data-state", "animate");
-            } else {
-                $(this).attr("src", $(this).attr("data-still"));
-                $(this).attr("data-state", "still");
-            };
-            alert(this);
-        });
-  //  }
 
 
 
-    // Adding a click event listener to all elements with a class of "movie"
-    $(document).on("click", ".toon", addGiphys);
+$(document).on("click", ".gif", function() {
+    // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
+    var state = $(this).attr("data-state");
+    // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+    // Then, set the image's data-state to animate
+    // Else set src to the data-still value
+    if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+    } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+    };
+    // alert(this);
+});
 
 
-    renderButtons();
-    //pause();
+
+// Adding a click event listener to all elements with a class of "toon"
+$(document).on("click", ".toon", addGiphys);
+
+
+renderButtons();
